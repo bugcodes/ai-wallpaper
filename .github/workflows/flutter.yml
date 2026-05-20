@@ -21,6 +21,5 @@ jobs:
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
-          flutter: true
           publish_dir: ./build/web
           github_token: ${{ secrets.GITHUB_TOKEN }}
