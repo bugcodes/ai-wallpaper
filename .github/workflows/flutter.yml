@@ -8,6 +8,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -19,7 +25,9 @@ jobs:
       - run: flutter pub get
       - run: flutter build web --release
 
-      - uses: peaceiris/actions-gh-pages@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          publish_dir: ./build/web
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./build/web
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
